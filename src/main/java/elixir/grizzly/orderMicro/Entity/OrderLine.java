@@ -1,5 +1,7 @@
 package elixir.grizzly.orderMicro.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -60,6 +62,8 @@ public class OrderLine {
         this.qty = qty;
     }
 
+    //Causing constant output for child array.
+    @JsonIgnore
     public OrderSum getOrder() {
         return order;
     }

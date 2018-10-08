@@ -17,13 +17,14 @@ public class OrderSum {
     private int orderId;
 
     @NotNull
-    @Column(name = "User_Id", unique = true)
+    @Column(name = "User_Id")
     private int userId;
 
     @NotNull
     @Column(name = "Status")
     private String status;
 
+    @NotNull
     @Column(name = "Total_Price")
     private double totalPrice;
 
