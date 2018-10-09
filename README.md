@@ -9,6 +9,12 @@
 * order_sum
   * order_id          [int]
   * status            [string]
+    * Pending   
+    * Complete
+    * Processing    *
+    * Closed    *
+    * Canceled  *
+    * On Hold   *
   * total_price       [double]
   * user_id           [int][PK][FK]
   <br/>
@@ -22,14 +28,15 @@
   
 ### API Functionality Requirement
 
-- [ ] getOrderById (int OrderId);
-- [ ] deleteOrderById (int OrderId);
+- [x] getAllOrder (int userId);
+- [x] getOrderByOrderId (int orderId);
+- [x] getOrderByStatus (int userId, String status);
+- [x] deleteOrderById (int orderId);
 - [ ] addOrder (Order order);
 - [ ] addProductToOrder (OrderLine orderline);
-- [ ] updateOrderStatus (String status,int orderId);
 - [ ] addOrderLine (OrderLine orderline, int orderId);
-- [ ] getAllOrder (int userId);
-- [ ] getOrderByStatus (int userId, String status);
+- [ ] deleteOrderLine (OrderLine orderline, int orderId);
+- [ ] updateOrderStatus (String status,int orderId);
 
 :octocat::octocat::octocat::octocat::octocat::octocat:
 :octocat::octocat::octocat::octocat::octocat::octocat:

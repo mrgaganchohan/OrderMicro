@@ -22,29 +22,73 @@ public class OrderController {
     @Autowired
     private OrderLineRepo orderLineRepo;
 
+    //GetAllOrderSum
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<OrderSum> allOrder(){
+    public @ResponseBody
+    Iterable<OrderSum> allOrder() {
         List<OrderSum> orderList = orderRepo.findAll();
-
-        for(OrderSum ord : orderList)
-        {
+        for (OrderSum ord : orderList) {
             List<OrderLine> ordLine = ord.getOrderline();
             ord.getOrderline().removeAll(ordLine);
         }
         return orderList;
     }
 
+    //GetAllOrder
     @GetMapping(path = "/allOrder")
-    public @ResponseBody Iterable<OrderSum> getAllOrder(){
+    public @ResponseBody
+    Iterable<OrderSum> getAllOrder() {
         return orderRepo.findAll();
     }
 
+    //@GetOrderByOrderId
     @GetMapping(path = "/{id}")
-    public ResponseEntity getOrder(@PathVariable("id") final int id){
-        OrderSum ord= orderRepo.findByOrderId(id);
-        return new ResponseEntity<>(ord, HttpStatus.OK);
+    public ResponseEntity getOrder(@PathVariable("id") final int id) {
+        OrderSum order = orderRepo.findByOrderId(id);
+        if (order == null) {
+            return new ResponseEntity<>("The order you were looking for doesn't exist." +
+                    " You may have mistyped the address or the order may have been deleted.", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
+    //@GetOrderByUserId
+    @GetMapping(path = "/user/{id}")
+    public ResponseEntity getOrderByUser(@PathVariable("id") final int id) {
+        List<OrderSum> order = orderRepo.findByUserId(id);
+        return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
+    //@GetOrderByStatus
+    @GetMapping(path = "/user/{id}/{stat}")
+    public ResponseEntity getOrderByStatus(@PathVariable("id") int id, @PathVariable("stat") String stat) {
+        List<OrderSum> order = orderRepo.findByStatus(id, stat);
+        return new ResponseEntity<>(order, HttpStatus.OK);
+    }
+
+    //@DeleteOrderById
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity delOrder(@PathVariable("id")  int id) {
+        OrderSum order = orderRepo.findByOrderId(id);
+        if (order == null) {
+            return new ResponseEntity<>("The order you were looking for doesn't exist." +
+                    " You may have mistyped the address or the order may have been deleted.", HttpStatus.NOT_FOUND);
+        }
+
+        orderRepo.deleteByOrderId(id);
+        return new ResponseEntity<>("Delete Success!!!", HttpStatus.OK);
+
+    }
+
+
+//    public ResponseEntity getOrderByStatus(@PathVariable("stat") final String stat){
+//        List<OrderSum> order = orderRepo.findByStatus(stat);
+//        if (order == null) {
+//            return new ResponseEntity<>("The order you were looking for doesn't exist." +
+//                    " You may have mistyped the address or the order may have been deleted.", HttpStatus.CONFLICT);
+//        }
+//        return new ResponseEntity<>(order, HttpStatus.OK);
+//    }
 
 
 }
