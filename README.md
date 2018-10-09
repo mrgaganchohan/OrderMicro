@@ -9,8 +9,8 @@
 * order_sum
   * order_id          [int]
   * status            [string]
-    * Pending   
-    * Complete
+    * pending   
+    * complete
     * Processing    *
     * Closed    *
     * Canceled  *
@@ -31,6 +31,7 @@
 - [x] getAllOrder (int userId);
 - [x] getOrderByOrderId (int orderId);
 - [x] getOrderByStatus (int userId, String status);
+- [x] getCartNum (int userId)
 - [x] deleteOrderById (int orderId);
 - [ ] addOrder (Order order);
 - [ ] addProductToOrder (OrderLine orderline);

@@ -68,17 +68,25 @@ public class OrderController {
 
     //@DeleteOrderById
     @DeleteMapping(path = "/delete/{id}")
-    public ResponseEntity delOrder(@PathVariable("id")  int id) {
+    public ResponseEntity delOrder(@PathVariable("id") int id) {
         OrderSum order = orderRepo.findByOrderId(id);
         if (order == null) {
             return new ResponseEntity<>("The order you were looking for doesn't exist." +
                     " You may have mistyped the address or the order may have been deleted.", HttpStatus.NOT_FOUND);
         }
-
         orderRepo.deleteByOrderId(id);
         return new ResponseEntity<>("Delete Success!!!", HttpStatus.OK);
-
     }
+
+    //@GetCartNum
+    @GetMapping(path = "/user/{id}/cart")
+    public ResponseEntity checkCart(@PathVariable("id") int id) {
+        List<OrderSum> count = orderRepo.findCartNum(id);
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
+
+
+    //@AddNewOrder
 
 
 //    public ResponseEntity getOrderByStatus(@PathVariable("stat") final String stat){

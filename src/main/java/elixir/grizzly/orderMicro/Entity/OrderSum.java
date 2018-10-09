@@ -1,8 +1,5 @@
 package elixir.grizzly.orderMicro.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -20,12 +17,10 @@ public class OrderSum {
     @Column(name = "User_Id")
     private int userId;
 
-    @NotNull
-    @Column(name = "Status")
+    @Column(name = "Status", columnDefinition = "VARCHAR(255) default 'pending' not null")
     private String status;
 
-    @NotNull
-    @Column(name = "Total_Price")
+    @Column(name = "Total_Price", columnDefinition = "DOUBLE default '0.0' not null")
     private double totalPrice;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, orphanRemoval = true)

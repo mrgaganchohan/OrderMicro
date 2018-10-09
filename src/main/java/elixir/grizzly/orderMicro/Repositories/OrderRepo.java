@@ -17,8 +17,11 @@ public interface OrderRepo extends JpaRepository<OrderSum, Integer> {
     @Query("SELECT e FROM OrderSum e WHERE e.userId=:id")
     List<OrderSum> findByUserId(int id);
 
-    @Query("SELECT e FROM OrderSum e WHERE e.userId=:id and e.status=:status")
+    @Query("SELECT e FROM OrderSum e WHERE e.userId=:id AND e.status=:status")
     List<OrderSum> findByStatus(int id, String status);
+
+    @Query("SELECT e FROM OrderSum e WHERE e.userId=:id AND e.status='pending'")
+    List<OrderSum> findCartNum(int id);
 
     @Transactional
     List<OrderSum> deleteByOrderId(int id);
