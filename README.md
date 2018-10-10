@@ -28,7 +28,9 @@
   
   
 ### API Functionality Requirement
+<br/>
 
+* Initial Stage(Initial Deploy)
 - [x] getAllOrder (int userId);
 - [x] getOrderByOrderId (int orderId);
 - [x] getOrderByStatus (int userId, String status);
@@ -38,7 +40,15 @@
     - [x] Sub: addOrder (Order order);
 - [x] delProduct (int orderId, OrderLine orderline);
     - [x] Sub: deleteOrder (Order order);
-- [ ] updateOrderStatus (String status,int orderId);
+- [x] updateOrderStatus (String status,int orderId);
+
+* Updating Statge(Further polish)
+- [ ] Error handle
+- [ ] Update Multiple Order info
+    - [ ] QTY
+    - [ ] Something
+    - [ ] Something
+- [ ] Payment validation ???    
 
 :octocat::octocat::octocat::octocat::octocat::octocat:
 :octocat::octocat::octocat::octocat::octocat::octocat:

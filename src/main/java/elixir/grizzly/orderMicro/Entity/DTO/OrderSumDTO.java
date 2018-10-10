@@ -10,6 +10,16 @@ public class OrderSumDTO {
 
     private String status;
 
+    private int orderId;
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
     public int getUserId() {
         return userId;
     }

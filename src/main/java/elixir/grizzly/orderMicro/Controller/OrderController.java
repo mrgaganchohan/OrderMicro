@@ -2,6 +2,7 @@ package elixir.grizzly.orderMicro.Controller;
 
 
 import elixir.grizzly.orderMicro.Entity.DTO.OrderLineDTO;
+import elixir.grizzly.orderMicro.Entity.DTO.OrderSumDTO;
 import elixir.grizzly.orderMicro.Entity.OrderLine;
 import elixir.grizzly.orderMicro.Entity.OrderSum;
 import elixir.grizzly.orderMicro.Repositories.OrderLineRepo;
@@ -177,17 +178,25 @@ public class OrderController {
     }
 
 
-//    //@UpdateOrderStatus
-//    @PutMapping(path = "/status/{oid}")
-//    public ResponseEntity updateStatus(@PathVariable("oid") int oid){
-//
-//    }
+    //@UpdateOrderStatus
+    @PutMapping(path = "/status/", consumes = "application/json")
+    public ResponseEntity updateStatus(@RequestBody OrderSumDTO ordersum){
+        int orderId = ordersum.getOrderId();
+        OrderSum exist = orderRepo.findByOrderId(orderId);
+        if(exist == null){
+            return new ResponseEntity<>("You don't have unfinished order!", HttpStatus.NOT_FOUND);
+        }else{
+            exist.setStatus("complete");
+            orderRepo.save(exist);
+            return new ResponseEntity<>("Gratz!! You have complete your order!", HttpStatus.OK);
+        }
+    }
 
 
     //TESTing
     @GetMapping(path = "/test/{id}")
     public ResponseEntity testfun(@PathVariable("id") int id) {
-        OrderSum exist = orderRepo.findCartNum(id);
-        return new ResponseEntity<>(exist.getOrderline(), HttpStatus.OK);
+        OrderSum exist = orderRepo.findByOrderId(id);
+        return new ResponseEntity<>(exist, HttpStatus.OK);
     }
 }
