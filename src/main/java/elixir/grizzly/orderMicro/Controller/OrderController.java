@@ -2,7 +2,6 @@ package elixir.grizzly.orderMicro.Controller;
 
 
 import elixir.grizzly.orderMicro.Entity.DTO.OrderLineDTO;
-import elixir.grizzly.orderMicro.Entity.DTO.OrderSumDTO;
 import elixir.grizzly.orderMicro.Entity.OrderLine;
 import elixir.grizzly.orderMicro.Entity.OrderSum;
 import elixir.grizzly.orderMicro.Repositories.OrderLineRepo;
@@ -90,24 +89,6 @@ public class OrderController {
         return new ResponseEntity<>(count, HttpStatus.OK);
     }
 
-//    //Sub @AddNewOrder
-//    @PostMapping(path = "/add", consumes = "application/json")
-//    public ResponseEntity createOrder(@RequestBody OrderSumDTO order) {
-//        OrderSum n = new OrderSum();
-//        String status = order.getStatus();
-//        double totalPrice = order.getTotalPrice();
-//        int userId = order.getUserId();
-//        OrderSum exist = orderRepo.findCartNum(userId);
-//        if (exist != null) {
-//            return new ResponseEntity<>("You have unfinished order!" + userId, HttpStatus.CONFLICT);
-//        }
-//        n.setUserId(userId);
-//        n.setStatus("pending");
-//        n.setTotalPrice(0);
-//        orderRepo.save(n);
-//        return new ResponseEntity<>("You have create a new order!", HttpStatus.CREATED);
-//    }
-
     //Wrapper try for two @RequestBody.
 //    public class Wrapper{
 //        private OrderSumDTO order;
@@ -133,62 +114,70 @@ public class OrderController {
             m.setQty(qty);
             m.setProductId(productId);
             m.setUnitPrice(unitPrice);
-            m.setSubTotal(qty*unitPrice);
+            m.setSubTotal(qty * unitPrice);
             orderLineRepo.save(m);
             n.setTotalPrice(m.getSubTotal());
             orderRepo.save(n);
             return new ResponseEntity<>("Thanks for starting your first order! ", HttpStatus.CREATED);
         } else {
             OrderLine product = orderLineRepo.findProductByPid(productId, exist);
-            if(product != null){
-                product.setQty(product.getQty()+qty);
-                product.setSubTotal(product.getSubTotal()+qty*unitPrice);
+            if (product != null) {
+                product.setQty(product.getQty() + qty);
+                product.setSubTotal(product.getSubTotal() + qty * unitPrice);
                 orderLineRepo.save(product);
-                exist.setTotalPrice(exist.getTotalPrice()+qty*unitPrice);
+                exist.setTotalPrice(exist.getTotalPrice() + qty * unitPrice);
                 orderRepo.save(exist);
                 return new ResponseEntity<>("Gratz!! You have updated your cart!", HttpStatus.OK);
-            }else{
+            } else {
                 m.setOrder(exist);
                 m.setQty(qty);
                 m.setProductId(productId);
                 m.setUnitPrice(unitPrice);
-                m.setSubTotal(qty*unitPrice);
+                m.setSubTotal(qty * unitPrice);
                 orderLineRepo.save(m);
-                exist.setTotalPrice(exist.getTotalPrice()+m.getSubTotal());
+                exist.setTotalPrice(exist.getTotalPrice() + m.getSubTotal());
                 orderRepo.save(exist);
                 return new ResponseEntity<>("Gratz!! You have add it to your cart!", HttpStatus.CREATED);
             }
         }
     }
-//    @DeleteProductFromOrder
-//    @DeleteMapping(path = "delOrder/{uid}")
-//    public ResponseEntity delProduct(@RequestBody OrderLineDTO orderline, @PathVariable("uid") int uid){
-//        int productId = orderline.getProductId();
-//        OrderLine exist = orderLineRepo.
-//
+
+    //@DeleteProductFromOrder
+    @DeleteMapping(path = "delOrder/{uid}")
+    public ResponseEntity delProduct(@RequestBody OrderLineDTO orderline, @PathVariable("uid") int uid) {
+        int productId = orderline.getProductId();
+        OrderSum exist = orderRepo.findCartNum(uid);
+        OrderLine existProduct = orderLineRepo.findProductByPid(productId, exist);
+        if (exist == null) {
+            return new ResponseEntity<>("Error ! You don't have unfinished order!", HttpStatus.NOT_FOUND);
+        } else {
+            if (existProduct == null) {
+                return new ResponseEntity<>("Error !! You don't this product in your cart!", HttpStatus.CONFLICT);
+            } else {
+                orderLineRepo.deleteByOrderlineId(existProduct.getOrderlineId());
+                return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+            }
+        }
+    }
+
+//    //Sub@DeleteNewOrder
+//    @DeleteMapping(path = "/delete/user/{id}")
+//    public ResponseEntity delUndoneOrder(@PathVariable("id") int id) {
+//        OrderSum exist = orderRepo.findCartNum(id);
+//        if (exist == null) {
+//            return new ResponseEntity<>("You don't have unfinished order!", HttpStatus.NOT_FOUND);
+//        }
+//        orderRepo.deleteByOrderId(exist.getOrderId());
+//        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
 //
 //    }
-
-
-
-    //Sub@DeleteNewOrder
-    @DeleteMapping(path = "/delete/user/{id}")
-    public ResponseEntity delUndoneOrder(@PathVariable("id") int id) {
-        OrderSum exist = orderRepo.findCartNum(id);
-        if (exist == null) {
-            return new ResponseEntity<>("You don't have unfinished order!", HttpStatus.CONFLICT);
-        }
-        orderRepo.deleteByOrderId(exist.getOrderId());
-        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
-
-    }
 
 
     //TESTing
     @GetMapping(path = "/test/{id}")
     public ResponseEntity testfun(@PathVariable("id") int id) {
-        OrderSum test = orderRepo.findCartNum(id);
-        return new ResponseEntity<>(test, HttpStatus.OK);
+        OrderSum exist = orderRepo.findCartNum(id);
+        return new ResponseEntity<>(exist.getOrderline(), HttpStatus.OK);
     }
 
 

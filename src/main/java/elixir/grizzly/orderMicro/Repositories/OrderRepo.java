@@ -26,8 +26,7 @@ public interface OrderRepo extends JpaRepository<OrderSum, Integer> {
     @Transactional
     List<OrderSum> deleteByOrderId(int id);
 
-//    @Transactional
-//    List<OrderSum> delUnDoneOrder(int id);
+
 
 
 }

@@ -31,7 +31,7 @@ public class OrderLine {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "Order_Id", nullable = false)
+    @JoinColumn(name = "Order_Id", referencedColumnName = "Order_Id")
     private OrderSum order;
 
     public int getOrderlineId() {
@@ -75,10 +75,10 @@ public class OrderLine {
     }
 
     //Causing constant output for child array.
-    @JsonIgnore
-    public OrderSum getOrder() {
-        return order;
-    }
+//    @JsonIgnore
+//    public OrderSum getOrder() {
+//        return order;
+//    }
 
     public void setOrder(OrderSum order) {
         this.order = order;

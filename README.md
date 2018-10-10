@@ -23,6 +23,7 @@
   * product_id [int]
   * qty [int]
   * unit_price [double]
+  * sub_total [double]
   * order_id [int][FK]
   
   
@@ -35,7 +36,7 @@
 - [x] deleteOrderById (int orderId);
 - [x] addProduct (int orderId, OrderLine orderline);
     - [x] Sub: addOrder (Order order);
-- [ ] delProduct (int orderId, OrderLine orderline);
+- [x] delProduct (int orderId, OrderLine orderline);
     - [x] Sub: deleteOrder (Order order);
 - [ ] updateOrderStatus (String status,int orderId);
 
