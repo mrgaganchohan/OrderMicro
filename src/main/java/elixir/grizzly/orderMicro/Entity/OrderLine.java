@@ -26,6 +26,10 @@ public class OrderLine {
     private int qty;
 
     @NotNull
+    @Column(name = "Sub_Total")
+    private double subTotal;
+
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "Order_Id", nullable = false)
     private OrderSum order;
@@ -60,6 +64,14 @@ public class OrderLine {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+    public double getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(double subTotal) {
+        this.subTotal = subTotal;
     }
 
     //Causing constant output for child array.

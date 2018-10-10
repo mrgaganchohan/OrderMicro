@@ -17,10 +17,10 @@ public class OrderSum {
     @Column(name = "User_Id")
     private int userId;
 
-    @Column(name = "Status", columnDefinition = "VARCHAR(255) default 'pending' not null")
+    @Column(name = "Status", columnDefinition = "VARCHAR(255) default 'pending'")
     private String status;
 
-    @Column(name = "Total_Price", columnDefinition = "DOUBLE default '0.0' not null")
+    @Column(name = "Total_Price", columnDefinition = "DOUBLE default '0.0'")
     private double totalPrice;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, orphanRemoval = true)

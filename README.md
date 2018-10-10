@@ -33,10 +33,10 @@
 - [x] getOrderByStatus (int userId, String status);
 - [x] getCartNum (int userId)
 - [x] deleteOrderById (int orderId);
-- [ ] addOrder (Order order);
-- [ ] addProductToOrder (OrderLine orderline);
-- [ ] addOrderLine (OrderLine orderline, int orderId);
-- [ ] deleteOrderLine (OrderLine orderline, int orderId);
+- [x] addProduct (int orderId, OrderLine orderline);
+    - [x] Sub: addOrder (Order order);
+- [ ] delProduct (int orderId, OrderLine orderline);
+    - [x] Sub: deleteOrder (Order order);
 - [ ] updateOrderStatus (String status,int orderId);
 
 :octocat::octocat::octocat::octocat::octocat::octocat:
