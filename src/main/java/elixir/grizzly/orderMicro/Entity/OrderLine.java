@@ -74,12 +74,6 @@ public class OrderLine {
         this.subTotal = subTotal;
     }
 
-    //Causing constant output for child array.
-//    @JsonIgnore
-//    public OrderSum getOrder() {
-//        return order;
-//    }
-
     public void setOrder(OrderSum order) {
         this.order = order;
     }

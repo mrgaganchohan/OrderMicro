@@ -83,6 +83,7 @@ public class OrderController {
     }
 
     //@GetCartNum
+    //Need front end to test API callback.
     @GetMapping(path = "/user/{id}/cart")
     public ResponseEntity checkCart(@PathVariable("id") int id) {
         OrderSum count = orderRepo.findCartNum(id);
@@ -152,23 +153,33 @@ public class OrderController {
             return new ResponseEntity<>("Error ! You don't have unfinished order!", HttpStatus.NOT_FOUND);
         } else {
             if (existProduct == null) {
-                return new ResponseEntity<>("Error !! You don't this product in your cart!", HttpStatus.CONFLICT);
+                return new ResponseEntity<>("Error !! You don't have this product in your cart!",
+                        HttpStatus.NOT_FOUND);
             } else {
+                exist.setTotalPrice(exist.getTotalPrice()-existProduct.getSubTotal());
+                orderRepo.save(exist);
                 orderLineRepo.deleteByOrderlineId(existProduct.getOrderlineId());
-                return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+                return new ResponseEntity<>("Successfully deleted ", HttpStatus.OK);
             }
         }
     }
 
-//    //Sub@DeleteNewOrder
-//    @DeleteMapping(path = "/delete/user/{id}")
-//    public ResponseEntity delUndoneOrder(@PathVariable("id") int id) {
-//        OrderSum exist = orderRepo.findCartNum(id);
-//        if (exist == null) {
-//            return new ResponseEntity<>("You don't have unfinished order!", HttpStatus.NOT_FOUND);
-//        }
-//        orderRepo.deleteByOrderId(exist.getOrderId());
-//        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+    //Sub@DeleteNewOrder
+    @DeleteMapping(path = "/delete/user/{id}")
+    public ResponseEntity delUndoneOrder(@PathVariable("id") int id) {
+        OrderSum exist = orderRepo.findCartNum(id);
+        if (exist == null) {
+            return new ResponseEntity<>("You don't have unfinished order!", HttpStatus.NOT_FOUND);
+        }
+        orderRepo.deleteByOrderId(exist.getOrderId());
+        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+
+    }
+
+
+//    //@UpdateOrderStatus
+//    @PutMapping(path = "/status/{oid}")
+//    public ResponseEntity updateStatus(@PathVariable("oid") int oid){
 //
 //    }
 
@@ -179,6 +190,4 @@ public class OrderController {
         OrderSum exist = orderRepo.findCartNum(id);
         return new ResponseEntity<>(exist.getOrderline(), HttpStatus.OK);
     }
-
-
 }

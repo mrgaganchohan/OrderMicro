@@ -6,9 +6,9 @@ public class OrderSumDTO {
     @NotNull
     private int userId;
 
-//    private double totalPrice;
-//
-//    private String status;
+    private double totalPrice;
+
+    private String status;
 
     public int getUserId() {
         return userId;
@@ -18,19 +18,19 @@ public class OrderSumDTO {
         this.userId = userId;
     }
 
-//    public double getTotalPrice() {
-//        return totalPrice;
-//    }
-//
-//    public void setTotalPrice(double totalPrice) {
-//        this.totalPrice = totalPrice;
-//    }
-//
-//    public String getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(String status) {
-//        this.status = status;
-//    }
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
