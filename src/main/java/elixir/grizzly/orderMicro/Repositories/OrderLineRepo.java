@@ -12,12 +12,6 @@ import java.util.List;
 
 @Repository
 public interface OrderLineRepo extends JpaRepository<OrderLine, Integer> {
-
-    @Query("SELECT e FROM OrderLine e WHERE e.orderlineId=:id" )
-    OrderLine findByProductId(int id);
-
-//    @Query("SELECT e FROM OrderLine e WHERE ")
-
     @Query("SELECT e FROM OrderLine e WHERE e.productId=:id AND e.order=:ordersum")
     OrderLine findProductByPid(int id, OrderSum ordersum);
 
