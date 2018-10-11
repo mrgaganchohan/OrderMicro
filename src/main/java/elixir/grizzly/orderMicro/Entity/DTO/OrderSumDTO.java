@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 public class OrderSumDTO {
     @NotNull
-    private int userId;
+    private String email;
 
     private double totalPrice;
 
@@ -20,12 +20,12 @@ public class OrderSumDTO {
         this.orderId = orderId;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public double getTotalPrice() {

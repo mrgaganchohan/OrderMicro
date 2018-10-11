@@ -58,16 +58,16 @@ public class OrderController {
     }
 
     //@GetOrderByUserId
-    @GetMapping(path = "/user/{id}")
-    public ResponseEntity getOrderByUser(@PathVariable("id") final int id) {
-        List<OrderSum> order = orderRepo.findByUserId(id);
+    @GetMapping(path = "/user/{email}")
+    public ResponseEntity getOrderByUser(@PathVariable("email") final String email) {
+        List<OrderSum> order = orderRepo.findByEmail(email);
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
     //@GetOrderByStatus
-    @GetMapping(path = "/user/{id}/{stat}")
-    public ResponseEntity getOrderByStatus(@PathVariable("id") int id, @PathVariable("stat") String stat) {
-        List<OrderSum> order = orderRepo.findByStatus(id, stat);
+    @GetMapping(path = "/user/{email}/{stat}")
+    public ResponseEntity getOrderByStatus(@PathVariable("email") String email, @PathVariable("stat") String stat) {
+        List<OrderSum> order = orderRepo.findByStatus(email, stat);
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
@@ -85,9 +85,9 @@ public class OrderController {
 
     //@GetCartNum
     //Need front end to test API callback.
-    @GetMapping(path = "/user/{id}/cart")
-    public ResponseEntity checkCart(@PathVariable("id") int id) {
-        OrderSum count = orderRepo.findCartNum(id);
+    @GetMapping(path = "/user/{email}/cart")
+    public ResponseEntity checkCart(@PathVariable("email") String email) {
+        OrderSum count = orderRepo.findCartNum(email);
         return new ResponseEntity<>(count, HttpStatus.OK);
     }
 
@@ -98,9 +98,9 @@ public class OrderController {
 //}
 
     //@AddProductToOrder
-    @PostMapping(path = "/addOrder/{uid}", consumes = "application/json")
-    public ResponseEntity addProduct(@RequestBody OrderLineDTO orderline, @PathVariable("uid") int uid) {
-        OrderSum exist = orderRepo.findCartNum(uid);
+    @PostMapping(path = "/addOrder/{email}", consumes = "application/json")
+    public ResponseEntity addProduct(@RequestBody OrderLineDTO orderline, @PathVariable("email") String email) {
+        OrderSum exist = orderRepo.findCartNum(email);
         OrderLine m = new OrderLine();
         int productId = orderline.getProductId();
         int qty = orderline.getQty();
@@ -109,7 +109,7 @@ public class OrderController {
             OrderSum n = new OrderSum();
             Log.info("Creating Initial Order!  ");
             n.setStatus("pending");
-            n.setUserId(uid);
+            n.setEmail(email);
             orderRepo.save(n);
             //Initial OrderLine info
             m.setOrder(n);
@@ -145,10 +145,10 @@ public class OrderController {
     }
 
     //@DeleteProductFromOrder
-    @DeleteMapping(path = "delOrder/{uid}")
-    public ResponseEntity delProduct(@RequestBody OrderLineDTO orderline, @PathVariable("uid") int uid) {
+    @DeleteMapping(path = "delOrder/{email}")
+    public ResponseEntity delProduct(@RequestBody OrderLineDTO orderline, @PathVariable("email") String email) {
         int productId = orderline.getProductId();
-        OrderSum exist = orderRepo.findCartNum(uid);
+        OrderSum exist = orderRepo.findCartNum(email);
         OrderLine existProduct = orderLineRepo.findProductByPid(productId, exist);
         if (exist == null) {
             return new ResponseEntity<>("Error ! You don't have unfinished order!", HttpStatus.NOT_FOUND);
@@ -166,9 +166,9 @@ public class OrderController {
     }
 
     //Sub@DeleteNewOrder
-    @DeleteMapping(path = "/delete/user/{id}")
-    public ResponseEntity delUndoneOrder(@PathVariable("id") int id) {
-        OrderSum exist = orderRepo.findCartNum(id);
+    @DeleteMapping(path = "/delete/user/{email}")
+    public ResponseEntity delUndoneOrder(@PathVariable("email") String email) {
+        OrderSum exist = orderRepo.findCartNum(email);
         if (exist == null) {
             return new ResponseEntity<>("You don't have unfinished order!", HttpStatus.NOT_FOUND);
         }
@@ -179,7 +179,7 @@ public class OrderController {
 
 
     //@UpdateOrderStatus
-    @PutMapping(path = "/status/", consumes = "application/json")
+    @PutMapping(path = "/status", consumes = "application/json")
     public ResponseEntity updateStatus(@RequestBody OrderSumDTO ordersum){
         int orderId = ordersum.getOrderId();
         OrderSum exist = orderRepo.findByOrderId(orderId);

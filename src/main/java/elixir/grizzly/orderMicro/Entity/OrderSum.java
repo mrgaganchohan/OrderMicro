@@ -14,8 +14,8 @@ public class OrderSum {
     private int orderId;
 
     @NotNull
-    @Column(name = "User_Id")
-    private int userId;
+    @Column(name = "Email")
+    private String email;
 
     @Column(name = "Status", columnDefinition = "VARCHAR(255) default 'pending'")
     private String status;
@@ -34,12 +34,12 @@ public class OrderSum {
         this.orderId = orderId;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getStatus() {

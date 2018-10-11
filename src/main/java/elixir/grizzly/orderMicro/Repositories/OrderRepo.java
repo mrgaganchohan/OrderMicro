@@ -14,14 +14,14 @@ public interface OrderRepo extends JpaRepository<OrderSum, Integer> {
     @Query("SELECT e FROM OrderSum e WHERE e.orderId=:id")
     OrderSum findByOrderId(int id);
 
-    @Query("SELECT e FROM OrderSum e WHERE e.userId=:id")
-    List<OrderSum> findByUserId(int id);
+    @Query("SELECT e FROM OrderSum e WHERE e.email=:email")
+    List<OrderSum> findByEmail(String email);
 
-    @Query("SELECT e FROM OrderSum e WHERE e.userId=:id AND e.status=:status")
-    List<OrderSum> findByStatus(int id, String status);
+    @Query("SELECT e FROM OrderSum e WHERE e.email=:email AND e.status=:status")
+    List<OrderSum> findByStatus(String email, String status);
 
-    @Query("SELECT e FROM OrderSum e WHERE e.userId=:id AND e.status='pending'")
-    OrderSum findCartNum(int id);
+    @Query("SELECT e FROM OrderSum e WHERE e.email=:email AND e.status='pending'")
+    OrderSum findCartNum(String email);
 
     @Transactional
     List<OrderSum> deleteByOrderId(int id);

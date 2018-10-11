@@ -7,7 +7,7 @@
 ### Database Structure
 
 * order_sum
-  * order_id          [int]
+  * order_id          [int][FK][PK]
   * status            [string]
     * pending   
     * complete
@@ -16,11 +16,11 @@
     * Canceled  *
     * On Hold   *
   * total_price       [double]
-  * user_id           [int][PK][FK]
+  * email           [int]
   <br/>
 * order_line
-  * orderline_id       [int][PK]
-  * product_id [int]
+  * orderline_id    [int][PK]
+  * product_id  [int]
   * qty [int]
   * unit_price [double]
   * sub_total [double]
@@ -31,14 +31,14 @@
 <br/>
 
 * Initial Stage(Initial Deploy)
-- [x] getAllOrder (int userId);
+- [x] getAllOrder (String email);
 - [x] getOrderByOrderId (int orderId);
-- [x] getOrderByStatus (int userId, String status);
-- [x] getCartNum (int userId)
+- [x] getOrderByStatus (String email, String status);
+- [x] getCartNum (String email)
 - [x] deleteOrderById (int orderId);
-- [x] addProduct (int orderId, OrderLine orderline);
+- [x] addProduct (String email, OrderLine orderline);
     - [x] Sub: addOrder (Order order);
-- [x] delProduct (int orderId, OrderLine orderline);
+- [x] delProduct (String email, OrderLine orderline);
     - [x] Sub: deleteOrder (Order order);
 - [x] updateOrderStatus (String status,int orderId);
 
