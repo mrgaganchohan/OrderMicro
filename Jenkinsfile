@@ -23,7 +23,7 @@ pipeline {
 
         stage ('Deployment Stage') {
         steps {
-        sh '/var/lib/jenkins/scripts/06_deploy_category_micro.sh'
+        sh '/var/lib/jenkins/scripts/07_deploy_orders_micro.sh'
         }
         }
         }
