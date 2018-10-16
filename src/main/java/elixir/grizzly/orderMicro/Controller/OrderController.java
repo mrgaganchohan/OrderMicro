@@ -145,11 +145,31 @@ public class OrderController {
     }
 
     //@DeleteProductFromOrder
-    @DeleteMapping(path = "delOrder/{email}")
-    public ResponseEntity delProduct(@RequestBody OrderLineDTO orderline, @PathVariable("email") String email) {
-        int productId = orderline.getProductId();
+//    @DeleteMapping(path = "delOrder/{email}")
+//    public ResponseEntity delProduct(@RequestBody OrderLineDTO orderline, @PathVariable("email") String email) {
+//        int productId = orderline.getProductId();
+//        OrderSum exist = orderRepo.findCartNum(email);
+//        OrderLine existProduct = orderLineRepo.findProductByPid(productId, exist);
+//        if (exist == null) {
+//            return new ResponseEntity<>("Error ! You don't have unfinished order!", HttpStatus.NOT_FOUND);
+//        } else {
+//            if (existProduct == null) {
+//                return new ResponseEntity<>("Error !! You don't have this product in your cart!",
+//                        HttpStatus.NOT_FOUND);
+//            } else {
+//                exist.setTotalPrice(exist.getTotalPrice()-existProduct.getSubTotal());
+//                orderRepo.save(exist);
+//                orderLineRepo.deleteByOrderlineId(existProduct.getOrderlineId());
+//                return new ResponseEntity<>("Successfully deleted ", HttpStatus.OK);
+//            }
+//        }
+//    }
+
+
+    @DeleteMapping(path = "/delete/{email}/{pid}")
+    public ResponseEntity getOrderByStatus(@PathVariable("email") String email, @PathVariable("pid") int pid) {
         OrderSum exist = orderRepo.findCartNum(email);
-        OrderLine existProduct = orderLineRepo.findProductByPid(productId, exist);
+        OrderLine existProduct = orderLineRepo.findProductByPid(pid, exist);
         if (exist == null) {
             return new ResponseEntity<>("Error ! You don't have unfinished order!", HttpStatus.NOT_FOUND);
         } else {
