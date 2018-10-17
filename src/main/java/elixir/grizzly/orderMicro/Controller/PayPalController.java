@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import elixir.grizzly.orderMicro.paypal.PayPalClient;
-@CrossOrigin
+@CrossOrigin(origins = {"http://localhost:80","https://api.elixir.ausgrads.academy"})
 @RestController
 //@RequestMapping(value = "/paypal")
 @RequestMapping(path = "/paypal")
@@ -30,7 +30,7 @@ public class PayPalController {
         return payPalClient.createPayment(sum);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+//    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(value = "/complete/payment")
     public Map<String, Object> completePayment(HttpServletRequest request, @RequestParam("paymentId") String paymentId, @RequestParam("payerId") String payerId){
         return payPalClient.completePayment(request);
