@@ -1,10 +1,14 @@
 package elixir.grizzly.orderMicro.Controller;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import elixir.grizzly.orderMicro.paypal.PayPalClient;
+
+
 @CrossOrigin(origins = {"http://localhost:80","https://api.elixir.ausgrads.academy"})
 @RestController
 //@RequestMapping(value = "/paypal")
@@ -26,6 +30,8 @@ public class PayPalController {
 
 //    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(value = "/make/payment")
+    @Timed
+    @Transactional(timeout = 120)
     public Map<String, Object> makePayment(@RequestParam("sum") String sum){
         return payPalClient.createPayment(sum);
     }
