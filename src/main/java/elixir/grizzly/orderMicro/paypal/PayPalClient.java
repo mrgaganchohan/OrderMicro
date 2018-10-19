@@ -40,8 +40,8 @@ public class PayPalClient {
         payment.setTransactions(transactions);
 
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("https://elixir.ausgrads.academy");
-        redirectUrls.setReturnUrl("https://elixir.ausgrads.academy/cart");
+        redirectUrls.setCancelUrl("https://elixir.ausgrads.academy/cart");
+        redirectUrls.setReturnUrl("https://elixir.ausgrads.academy/order");
         payment.setRedirectUrls(redirectUrls);
         Payment createdPayment;
         try {
