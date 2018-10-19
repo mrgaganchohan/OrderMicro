@@ -9,7 +9,7 @@ import java.util.Map;
 import elixir.grizzly.orderMicro.paypal.PayPalClient;
 
 
-@CrossOrigin(origins = {"http://localhost:80","https://api.elixir.ausgrads.academy"})
+@CrossOrigin(origins = {"http://localhost:80","http://localhost:3000","https://api.elixir.ausgrads.academy"})
 @RestController
 //@RequestMapping(value = "/paypal")
 @RequestMapping(path = "/paypal")
