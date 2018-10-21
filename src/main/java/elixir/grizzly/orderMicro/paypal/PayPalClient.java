@@ -21,7 +21,7 @@ public class PayPalClient {
 //    @Autowired
 //    PayPalClient(){}
 
-    public Map<String, Object> createPayment(String sum){
+    public Map<String, Object> createPayment(String sum, String email, String orderId){
         Map<String, Object> response = new HashMap<String, Object>();
         Amount amount = new Amount();
         amount.setCurrency("AUD");
@@ -41,7 +41,7 @@ public class PayPalClient {
 
         RedirectUrls redirectUrls = new RedirectUrls();
         redirectUrls.setCancelUrl("https://elixir.ausgrads.academy/cart");
-        redirectUrls.setReturnUrl("https://elixir.ausgrads.academy/order");
+        redirectUrls.setReturnUrl("https://elixir.ausgrads.academy/order/"+email+"/"+orderId);
         payment.setRedirectUrls(redirectUrls);
         Payment createdPayment;
         try {
